@@ -1,0 +1,852 @@
+(lerobot) jupyter-qj351@itp-ml-computer:~/lecamera/src$ python train.py --dataset.repo_id=jqhisme/lerobot-lecamera-dataset-filtered --policy.type=act --policy.push_to_hub=false --output_dir=outputs/train/act_so101_lecamera --job_name=act_so101_lecamera --policy.device=cuda --wandb.enable=false --output_dir='lecamera/src/output' --num_workers=4 --save_freq=10000 
+WARNING:root:'torchcodec' is not available in your platform, falling back to 'pyav' as a default decoder
+WARNING:root:'torchcodec' is not available in your platform, falling back to 'pyav' as a default decoder
+INFO 2025-12-18 17:56:47 rc/train.py:187 {'batch_size': 8,
+ 'checkpoint_path': None,
+ 'dataset': {'episodes': None,
+             'image_transforms': {'enable': False,
+                                  'max_num_transforms': 3,
+                                  'random_order': False,
+                                  'tfs': {'affine': {'kwargs': {'degrees': [-5.0,
+                                                                            5.0],
+                                                                'translate': [0.05,
+                                                                              0.05]},
+                                                     'type': 'RandomAffine',
+                                                     'weight': 1.0},
+                                          'brightness': {'kwargs': {'brightness': [0.8,
+                                                                                   1.2]},
+                                                         'type': 'ColorJitter',
+                                                         'weight': 1.0},
+                                          'contrast': {'kwargs': {'contrast': [0.8,
+                                                                               1.2]},
+                                                       'type': 'ColorJitter',
+                                                       'weight': 1.0},
+                                          'hue': {'kwargs': {'hue': [-0.05,
+                                                                     0.05]},
+                                                  'type': 'ColorJitter',
+                                                  'weight': 1.0},
+                                          'saturation': {'kwargs': {'saturation': [0.5,
+                                                                                   1.5]},
+                                                         'type': 'ColorJitter',
+                                                         'weight': 1.0},
+                                          'sharpness': {'kwargs': {'sharpness': [0.5,
+                                                                                 1.5]},
+                                                        'type': 'SharpnessJitter',
+                                                        'weight': 1.0}}},
+             'repo_id': 'jqhisme/lerobot-lecamera-dataset-filtered',
+             'revision': None,
+             'root': None,
+             'streaming': False,
+             'use_imagenet_stats': True,
+             'video_backend': 'pyav'},
+ 'env': None,
+ 'eval': {'batch_size': 50, 'n_episodes': 50, 'use_async_envs': False},
+ 'eval_freq': 20000,
+ 'job_name': 'act_so101_lecamera',
+ 'log_freq': 200,
+ 'num_workers': 4,
+ 'optimizer': {'betas': [0.9, 0.999],
+               'eps': 1e-08,
+               'grad_clip_norm': 10.0,
+               'lr': 1e-05,
+               'type': 'adamw',
+               'weight_decay': 0.0001},
+ 'output_dir': 'lecamera/src/output',
+ 'policy': {'chunk_size': 100,
+            'device': 'cuda',
+            'dim_feedforward': 3200,
+            'dim_model': 512,
+            'dropout': 0.1,
+            'feedforward_activation': 'relu',
+            'input_features': {},
+            'kl_weight': 10.0,
+            'latent_dim': 32,
+            'license': None,
+            'n_action_steps': 100,
+            'n_decoder_layers': 1,
+            'n_encoder_layers': 4,
+            'n_heads': 8,
+            'n_obs_steps': 1,
+            'n_vae_encoder_layers': 4,
+            'normalization_mapping': {'ACTION': <NormalizationMode.MEAN_STD: 'MEAN_STD'>,
+                                      'STATE': <NormalizationMode.MEAN_STD: 'MEAN_STD'>,
+                                      'VISUAL': <NormalizationMode.MEAN_STD: 'MEAN_STD'>},
+            'optimizer_lr': 1e-05,
+            'optimizer_lr_backbone': 1e-05,
+            'optimizer_weight_decay': 0.0001,
+            'output_features': {},
+            'pre_norm': False,
+            'pretrained_backbone_weights': 'ResNet18_Weights.IMAGENET1K_V1',
+            'pretrained_path': None,
+            'private': None,
+            'push_to_hub': False,
+            'replace_final_stride_with_dilation': False,
+            'repo_id': None,
+            'tags': None,
+            'temporal_ensemble_coeff': None,
+            'type': 'act',
+            'use_amp': False,
+            'use_vae': True,
+            'vision_backbone': 'resnet18'},
+ 'rename_map': {},
+ 'resume': False,
+ 'save_checkpoint': True,
+ 'save_freq': 10000,
+ 'scheduler': None,
+ 'seed': 1000,
+ 'steps': 100000,
+ 'use_policy_training_preset': True,
+ 'wandb': {'disable_artifact': False,
+           'enable': False,
+           'entity': None,
+           'mode': None,
+           'notes': None,
+           'project': 'lerobot',
+           'run_id': None}}
+INFO 2025-12-18 17:56:47 rc/train.py:195 Logs will be saved locally.
+INFO 2025-12-18 17:56:47 rc/train.py:207 Creating dataset
+INFO 2025-12-18 17:56:47 rc/train.py:226 Creating policy
+INFO 2025-12-18 17:56:48 rc/train.py:275 Creating optimizer and scheduler
+INFO 2025-12-18 17:56:48 rc/train.py:310 Output dir: lecamera/src/output
+INFO 2025-12-18 17:56:48 rc/train.py:317 cfg.steps=100000 (100K)
+INFO 2025-12-18 17:56:48 rc/train.py:318 dataset.num_frames=29274 (29K)
+INFO 2025-12-18 17:56:48 rc/train.py:319 dataset.num_episodes=19
+INFO 2025-12-18 17:56:48 rc/train.py:322 Effective batch size: 8 x 1 = 8
+INFO 2025-12-18 17:56:48 rc/train.py:323 num_learnable_params=51597190 (52M)
+INFO 2025-12-18 17:56:48 rc/train.py:324 num_total_params=51597190 (52M)
+INFO 2025-12-18 17:56:48 rc/train.py:380 Start offline training on a fixed dataset, with effective batch size: 8
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 17:56:58 rc/train.py:410 step:200 smpl:2K ep:1 epch:0.05 loss:7.040 grdn:158.596 lr:1.0e-05 updt_s:0.041 data_s:0.008
+INFO 2025-12-18 17:57:07 rc/train.py:410 step:400 smpl:3K ep:2 epch:0.11 loss:2.889 grdn:87.055 lr:1.0e-05 updt_s:0.036 data_s:0.007
+INFO 2025-12-18 17:57:15 rc/train.py:410 step:600 smpl:5K ep:3 epch:0.16 loss:2.378 grdn:75.994 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 17:57:24 rc/train.py:410 step:800 smpl:6K ep:4 epch:0.22 loss:2.112 grdn:69.467 lr:1.0e-05 updt_s:0.036 data_s:0.007
+INFO 2025-12-18 17:57:33 rc/train.py:410 step:1K smpl:8K ep:5 epch:0.27 loss:1.912 grdn:63.971 lr:1.0e-05 updt_s:0.036 data_s:0.007
+INFO 2025-12-18 17:57:41 rc/train.py:410 step:1K smpl:10K ep:6 epch:0.33 loss:1.723 grdn:60.511 lr:1.0e-05 updt_s:0.036 data_s:0.007
+INFO 2025-12-18 17:57:50 rc/train.py:410 step:1K smpl:11K ep:7 epch:0.38 loss:1.586 grdn:58.248 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 17:57:59 rc/train.py:410 step:2K smpl:13K ep:8 epch:0.44 loss:1.435 grdn:54.762 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 17:58:08 rc/train.py:410 step:2K smpl:14K ep:9 epch:0.49 loss:1.320 grdn:52.056 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 17:58:16 rc/train.py:410 step:2K smpl:16K ep:10 epch:0.55 loss:1.208 grdn:49.707 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 17:58:25 rc/train.py:410 step:2K smpl:18K ep:11 epch:0.60 loss:1.098 grdn:46.954 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 17:58:34 rc/train.py:410 step:2K smpl:19K ep:12 epch:0.66 loss:0.981 grdn:43.556 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 17:58:43 rc/train.py:410 step:3K smpl:21K ep:14 epch:0.71 loss:0.901 grdn:42.259 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 17:58:51 rc/train.py:410 step:3K smpl:22K ep:15 epch:0.77 loss:0.803 grdn:39.077 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 17:59:00 rc/train.py:410 step:3K smpl:24K ep:16 epch:0.82 loss:0.738 grdn:37.771 lr:1.0e-05 updt_s:0.038 data_s:0.005
+INFO 2025-12-18 17:59:09 rc/train.py:410 step:3K smpl:26K ep:17 epch:0.87 loss:0.682 grdn:35.515 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 17:59:17 rc/train.py:410 step:3K smpl:27K ep:18 epch:0.93 loss:0.620 grdn:32.880 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 17:59:26 rc/train.py:410 step:4K smpl:29K ep:19 epch:0.98 loss:0.572 grdn:32.620 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 17:59:36 rc/train.py:410 step:4K smpl:30K ep:20 epch:1.04 loss:0.522 grdn:30.473 lr:1.0e-05 updt_s:0.038 data_s:0.013
+INFO 2025-12-18 17:59:46 rc/train.py:410 step:4K smpl:32K ep:21 epch:1.09 loss:0.482 grdn:29.095 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 17:59:56 rc/train.py:410 step:4K smpl:34K ep:22 epch:1.15 loss:0.458 grdn:27.628 lr:1.0e-05 updt_s:0.038 data_s:0.012
+INFO 2025-12-18 18:00:06 rc/train.py:410 step:4K smpl:35K ep:23 epch:1.20 loss:0.429 grdn:26.934 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:00:16 rc/train.py:410 step:5K smpl:37K ep:24 epch:1.26 loss:0.402 grdn:25.268 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:00:27 rc/train.py:410 step:5K smpl:38K ep:25 epch:1.31 loss:0.372 grdn:24.201 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:00:37 rc/train.py:410 step:5K smpl:40K ep:26 epch:1.37 loss:0.363 grdn:23.804 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:00:47 rc/train.py:410 step:5K smpl:42K ep:27 epch:1.42 loss:0.340 grdn:22.985 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:00:57 rc/train.py:410 step:5K smpl:43K ep:28 epch:1.48 loss:0.328 grdn:22.007 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:01:07 rc/train.py:410 step:6K smpl:45K ep:29 epch:1.53 loss:0.310 grdn:21.171 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:01:17 rc/train.py:410 step:6K smpl:46K ep:30 epch:1.59 loss:0.302 grdn:20.921 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:01:27 rc/train.py:410 step:6K smpl:48K ep:31 epch:1.64 loss:0.296 grdn:20.134 lr:1.0e-05 updt_s:0.037 data_s:0.012
+INFO 2025-12-18 18:01:37 rc/train.py:410 step:6K smpl:50K ep:32 epch:1.69 loss:0.278 grdn:19.700 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:01:47 rc/train.py:410 step:6K smpl:51K ep:33 epch:1.75 loss:0.264 grdn:18.733 lr:1.0e-05 updt_s:0.037 data_s:0.012
+INFO 2025-12-18 18:01:56 rc/train.py:410 step:7K smpl:53K ep:34 epch:1.80 loss:0.260 grdn:19.004 lr:1.0e-05 updt_s:0.038 data_s:0.011
+INFO 2025-12-18 18:02:06 rc/train.py:410 step:7K smpl:54K ep:35 epch:1.86 loss:0.250 grdn:18.512 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:02:16 rc/train.py:410 step:7K smpl:56K ep:36 epch:1.91 loss:0.250 grdn:17.941 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:02:27 rc/train.py:410 step:7K smpl:58K ep:37 epch:1.97 loss:0.243 grdn:17.518 lr:1.0e-05 updt_s:0.037 data_s:0.014
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:02:37 rc/train.py:410 step:7K smpl:59K ep:38 epch:2.02 loss:0.231 grdn:17.601 lr:1.0e-05 updt_s:0.037 data_s:0.014
+INFO 2025-12-18 18:02:47 rc/train.py:410 step:8K smpl:61K ep:39 epch:2.08 loss:0.239 grdn:16.986 lr:1.0e-05 updt_s:0.037 data_s:0.013
+INFO 2025-12-18 18:02:57 rc/train.py:410 step:8K smpl:62K ep:41 epch:2.13 loss:0.220 grdn:16.144 lr:1.0e-05 updt_s:0.038 data_s:0.012
+INFO 2025-12-18 18:03:06 rc/train.py:410 step:8K smpl:64K ep:42 epch:2.19 loss:0.218 grdn:15.830 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:03:15 rc/train.py:410 step:8K smpl:66K ep:43 epch:2.24 loss:0.209 grdn:16.054 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:03:24 rc/train.py:410 step:8K smpl:67K ep:44 epch:2.30 loss:0.206 grdn:15.292 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:03:32 rc/train.py:410 step:9K smpl:69K ep:45 epch:2.35 loss:0.202 grdn:15.305 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:03:41 rc/train.py:410 step:9K smpl:70K ep:46 epch:2.40 loss:0.201 grdn:15.045 lr:1.0e-05 updt_s:0.038 data_s:0.007
+INFO 2025-12-18 18:03:50 rc/train.py:410 step:9K smpl:72K ep:47 epch:2.46 loss:0.201 grdn:14.818 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:03:59 rc/train.py:410 step:9K smpl:74K ep:48 epch:2.51 loss:0.189 grdn:14.799 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:04:08 rc/train.py:410 step:9K smpl:75K ep:49 epch:2.57 loss:0.188 grdn:13.904 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:04:17 rc/train.py:410 step:10K smpl:77K ep:50 epch:2.62 loss:0.183 grdn:13.868 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:04:26 rc/train.py:410 step:10K smpl:78K ep:51 epch:2.68 loss:0.184 grdn:13.971 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:04:35 rc/train.py:410 step:10K smpl:80K ep:52 epch:2.73 loss:0.180 grdn:13.605 lr:1.0e-05 updt_s:0.038 data_s:0.007
+INFO 2025-12-18 18:04:35 rc/train.py:430 Checkpoint policy after step 10000
+INFO 2025-12-18 18:04:44 rc/train.py:410 step:10K smpl:82K ep:53 epch:2.79 loss:0.177 grdn:13.414 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:04:53 rc/train.py:410 step:10K smpl:83K ep:54 epch:2.84 loss:0.179 grdn:13.472 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:05:02 rc/train.py:410 step:11K smpl:85K ep:55 epch:2.90 loss:0.172 grdn:13.179 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:05:11 rc/train.py:410 step:11K smpl:86K ep:56 epch:2.95 loss:0.172 grdn:12.915 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:05:20 rc/train.py:410 step:11K smpl:88K ep:57 epch:3.01 loss:0.164 grdn:12.841 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:05:29 rc/train.py:410 step:11K smpl:90K ep:58 epch:3.06 loss:0.166 grdn:12.391 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:05:38 rc/train.py:410 step:11K smpl:91K ep:59 epch:3.12 loss:0.163 grdn:12.432 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:05:47 rc/train.py:410 step:12K smpl:93K ep:60 epch:3.17 loss:0.164 grdn:12.345 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:05:56 rc/train.py:410 step:12K smpl:94K ep:61 epch:3.22 loss:0.159 grdn:12.069 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:06:05 rc/train.py:410 step:12K smpl:96K ep:62 epch:3.28 loss:0.160 grdn:12.011 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:06:14 rc/train.py:410 step:12K smpl:98K ep:63 epch:3.33 loss:0.158 grdn:11.965 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:06:23 rc/train.py:410 step:12K smpl:99K ep:64 epch:3.39 loss:0.154 grdn:11.653 lr:1.0e-05 updt_s:0.038 data_s:0.007
+INFO 2025-12-18 18:06:31 rc/train.py:410 step:13K smpl:101K ep:65 epch:3.44 loss:0.148 grdn:11.694 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:06:40 rc/train.py:410 step:13K smpl:102K ep:66 epch:3.50 loss:0.152 grdn:11.586 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:06:49 rc/train.py:410 step:13K smpl:104K ep:68 epch:3.55 loss:0.149 grdn:11.194 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:06:58 rc/train.py:410 step:13K smpl:106K ep:69 epch:3.61 loss:0.147 grdn:11.033 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:07:07 rc/train.py:410 step:13K smpl:107K ep:70 epch:3.66 loss:0.146 grdn:10.889 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:07:15 rc/train.py:410 step:14K smpl:109K ep:71 epch:3.72 loss:0.151 grdn:11.002 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:07:24 rc/train.py:410 step:14K smpl:110K ep:72 epch:3.77 loss:0.144 grdn:10.750 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:07:33 rc/train.py:410 step:14K smpl:112K ep:73 epch:3.83 loss:0.139 grdn:10.633 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:07:42 rc/train.py:410 step:14K smpl:114K ep:74 epch:3.88 loss:0.143 grdn:10.435 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:07:51 rc/train.py:410 step:14K smpl:115K ep:75 epch:3.94 loss:0.140 grdn:10.586 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:07:59 rc/train.py:410 step:15K smpl:117K ep:76 epch:3.99 loss:0.142 grdn:10.232 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:08:09 rc/train.py:410 step:15K smpl:118K ep:77 epch:4.04 loss:0.134 grdn:10.377 lr:1.0e-05 updt_s:0.038 data_s:0.008
+INFO 2025-12-18 18:08:17 rc/train.py:410 step:15K smpl:120K ep:78 epch:4.10 loss:0.137 grdn:10.378 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:08:26 rc/train.py:410 step:15K smpl:122K ep:79 epch:4.15 loss:0.136 grdn:10.272 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:08:35 rc/train.py:410 step:15K smpl:123K ep:80 epch:4.21 loss:0.134 grdn:9.734 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:08:44 rc/train.py:410 step:16K smpl:125K ep:81 epch:4.26 loss:0.132 grdn:9.855 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:08:53 rc/train.py:410 step:16K smpl:126K ep:82 epch:4.32 loss:0.133 grdn:9.779 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:09:02 rc/train.py:410 step:16K smpl:128K ep:83 epch:4.37 loss:0.131 grdn:9.569 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:09:11 rc/train.py:410 step:16K smpl:130K ep:84 epch:4.43 loss:0.128 grdn:9.719 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:09:19 rc/train.py:410 step:16K smpl:131K ep:85 epch:4.48 loss:0.129 grdn:9.413 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:09:28 rc/train.py:410 step:17K smpl:133K ep:86 epch:4.54 loss:0.121 grdn:8.937 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:09:37 rc/train.py:410 step:17K smpl:134K ep:87 epch:4.59 loss:0.131 grdn:9.511 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:09:46 rc/train.py:410 step:17K smpl:136K ep:88 epch:4.65 loss:0.128 grdn:9.222 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:09:55 rc/train.py:410 step:17K smpl:138K ep:89 epch:4.70 loss:0.125 grdn:9.022 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:10:04 rc/train.py:410 step:17K smpl:139K ep:90 epch:4.76 loss:0.125 grdn:9.135 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:10:12 rc/train.py:410 step:18K smpl:141K ep:91 epch:4.81 loss:0.120 grdn:8.887 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:10:21 rc/train.py:410 step:18K smpl:142K ep:92 epch:4.86 loss:0.123 grdn:8.586 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:10:30 rc/train.py:410 step:18K smpl:144K ep:93 epch:4.92 loss:0.123 grdn:8.800 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:10:39 rc/train.py:410 step:18K smpl:146K ep:95 epch:4.97 loss:0.120 grdn:8.671 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:10:48 rc/train.py:410 step:18K smpl:147K ep:96 epch:5.03 loss:0.118 grdn:8.656 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:10:57 rc/train.py:410 step:19K smpl:149K ep:97 epch:5.08 loss:0.119 grdn:8.472 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:11:06 rc/train.py:410 step:19K smpl:150K ep:98 epch:5.14 loss:0.118 grdn:8.505 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:11:15 rc/train.py:410 step:19K smpl:152K ep:99 epch:5.19 loss:0.115 grdn:8.339 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:11:24 rc/train.py:410 step:19K smpl:154K ep:100 epch:5.25 loss:0.112 grdn:8.482 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:11:33 rc/train.py:410 step:19K smpl:155K ep:101 epch:5.30 loss:0.117 grdn:7.975 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:11:42 rc/train.py:410 step:20K smpl:157K ep:102 epch:5.36 loss:0.112 grdn:8.328 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:11:51 rc/train.py:410 step:20K smpl:158K ep:103 epch:5.41 loss:0.116 grdn:8.064 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:12:00 rc/train.py:410 step:20K smpl:160K ep:104 epch:5.47 loss:0.110 grdn:7.930 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:12:00 rc/train.py:430 Checkpoint policy after step 20000
+INFO 2025-12-18 18:12:09 rc/train.py:410 step:20K smpl:162K ep:105 epch:5.52 loss:0.116 grdn:8.430 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:12:18 rc/train.py:410 step:20K smpl:163K ep:106 epch:5.57 loss:0.116 grdn:8.202 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:12:27 rc/train.py:410 step:21K smpl:165K ep:107 epch:5.63 loss:0.109 grdn:7.675 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:12:36 rc/train.py:410 step:21K smpl:166K ep:108 epch:5.68 loss:0.110 grdn:7.628 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:12:44 rc/train.py:410 step:21K smpl:168K ep:109 epch:5.74 loss:0.106 grdn:7.851 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:12:53 rc/train.py:410 step:21K smpl:170K ep:110 epch:5.79 loss:0.111 grdn:7.553 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:13:02 rc/train.py:410 step:21K smpl:171K ep:111 epch:5.85 loss:0.114 grdn:7.951 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:13:11 rc/train.py:410 step:22K smpl:173K ep:112 epch:5.90 loss:0.109 grdn:7.666 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:13:20 rc/train.py:410 step:22K smpl:174K ep:113 epch:5.96 loss:0.108 grdn:7.398 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:13:29 rc/train.py:410 step:22K smpl:176K ep:114 epch:6.01 loss:0.106 grdn:7.360 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:13:38 rc/train.py:410 step:22K smpl:178K ep:115 epch:6.07 loss:0.104 grdn:7.386 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:13:47 rc/train.py:410 step:22K smpl:179K ep:116 epch:6.12 loss:0.100 grdn:7.154 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:13:56 rc/train.py:410 step:23K smpl:181K ep:117 epch:6.18 loss:0.106 grdn:7.245 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:14:05 rc/train.py:410 step:23K smpl:182K ep:118 epch:6.23 loss:0.102 grdn:7.340 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:14:14 rc/train.py:410 step:23K smpl:184K ep:119 epch:6.29 loss:0.103 grdn:7.232 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:14:23 rc/train.py:410 step:23K smpl:186K ep:120 epch:6.34 loss:0.105 grdn:7.184 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:14:31 rc/train.py:410 step:23K smpl:187K ep:122 epch:6.39 loss:0.103 grdn:7.013 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:14:40 rc/train.py:410 step:24K smpl:189K ep:123 epch:6.45 loss:0.099 grdn:6.968 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:14:49 rc/train.py:410 step:24K smpl:190K ep:124 epch:6.50 loss:0.103 grdn:6.961 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:14:58 rc/train.py:410 step:24K smpl:192K ep:125 epch:6.56 loss:0.097 grdn:6.742 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:15:07 rc/train.py:410 step:24K smpl:194K ep:126 epch:6.61 loss:0.102 grdn:7.003 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:15:16 rc/train.py:410 step:24K smpl:195K ep:127 epch:6.67 loss:0.099 grdn:6.937 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:15:24 rc/train.py:410 step:25K smpl:197K ep:128 epch:6.72 loss:0.099 grdn:6.524 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:15:33 rc/train.py:410 step:25K smpl:198K ep:129 epch:6.78 loss:0.101 grdn:6.587 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:15:42 rc/train.py:410 step:25K smpl:200K ep:130 epch:6.83 loss:0.100 grdn:6.782 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:15:51 rc/train.py:410 step:25K smpl:202K ep:131 epch:6.89 loss:0.096 grdn:6.825 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:16:00 rc/train.py:410 step:25K smpl:203K ep:132 epch:6.94 loss:0.097 grdn:6.689 lr:1.0e-05 updt_s:0.037 data_s:0.007
+   INFO 2025-12-18 18:16:08 rc/train.py:410 step:26K smpl:205K ep:133 epch:7.00 loss:0.102 grdn:6.686 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:16:18 rc/train.py:410 step:26K smpl:206K ep:134 epch:7.05 loss:0.095 grdn:6.677 lr:1.0e-05 updt_s:0.038 data_s:0.009
+INFO 2025-12-18 18:16:27 rc/train.py:410 step:26K smpl:208K ep:135 epch:7.11 loss:0.094 grdn:6.543 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:16:36 rc/train.py:410 step:26K smpl:210K ep:136 epch:7.16 loss:0.095 grdn:6.375 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:16:44 rc/train.py:410 step:26K smpl:211K ep:137 epch:7.21 loss:0.094 grdn:6.117 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:16:53 rc/train.py:410 step:27K smpl:213K ep:138 epch:7.27 loss:0.093 grdn:6.440 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:17:02 rc/train.py:410 step:27K smpl:214K ep:139 epch:7.32 loss:0.094 grdn:6.483 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:17:11 rc/train.py:410 step:27K smpl:216K ep:140 epch:7.38 loss:0.096 grdn:6.070 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:17:20 rc/train.py:410 step:27K smpl:218K ep:141 epch:7.43 loss:0.093 grdn:6.167 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:17:29 rc/train.py:410 step:27K smpl:219K ep:142 epch:7.49 loss:0.095 grdn:6.201 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:17:38 rc/train.py:410 step:28K smpl:221K ep:143 epch:7.54 loss:0.092 grdn:6.139 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:17:46 rc/train.py:410 step:28K smpl:222K ep:144 epch:7.60 loss:0.090 grdn:6.270 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:17:55 rc/train.py:410 step:28K smpl:224K ep:145 epch:7.65 loss:0.094 grdn:6.103 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:18:04 rc/train.py:410 step:28K smpl:226K ep:146 epch:7.71 loss:0.092 grdn:6.013 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:18:13 rc/train.py:410 step:28K smpl:227K ep:147 epch:7.76 loss:0.089 grdn:5.870 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:18:22 rc/train.py:410 step:29K smpl:229K ep:149 epch:7.82 loss:0.092 grdn:5.911 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:18:30 rc/train.py:410 step:29K smpl:230K ep:150 epch:7.87 loss:0.090 grdn:5.992 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:18:39 rc/train.py:410 step:29K smpl:232K ep:151 epch:7.93 loss:0.092 grdn:5.831 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:18:48 rc/train.py:410 step:29K smpl:234K ep:152 epch:7.98 loss:0.091 grdn:5.947 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:18:57 rc/train.py:410 step:29K smpl:235K ep:153 epch:8.03 loss:0.091 grdn:5.879 lr:1.0e-05 updt_s:0.038 data_s:0.008
+INFO 2025-12-18 18:19:06 rc/train.py:410 step:30K smpl:237K ep:154 epch:8.09 loss:0.087 grdn:5.819 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:19:15 rc/train.py:410 step:30K smpl:238K ep:155 epch:8.14 loss:0.092 grdn:5.885 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:19:24 rc/train.py:410 step:30K smpl:240K ep:156 epch:8.20 loss:0.087 grdn:5.627 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:19:24 rc/train.py:430 Checkpoint policy after step 30000
+INFO 2025-12-18 18:19:33 rc/train.py:410 step:30K smpl:242K ep:157 epch:8.25 loss:0.088 grdn:5.806 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:19:42 rc/train.py:410 step:30K smpl:243K ep:158 epch:8.31 loss:0.088 grdn:5.988 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:19:51 rc/train.py:410 step:31K smpl:245K ep:159 epch:8.36 loss:0.084 grdn:5.622 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:20:00 rc/train.py:410 step:31K smpl:246K ep:160 epch:8.42 loss:0.087 grdn:5.551 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:20:09 rc/train.py:410 step:31K smpl:248K ep:161 epch:8.47 loss:0.088 grdn:5.725 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:20:17 rc/train.py:410 step:31K smpl:250K ep:162 epch:8.53 loss:0.087 grdn:5.641 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:20:26 rc/train.py:410 step:31K smpl:251K ep:163 epch:8.58 loss:0.083 grdn:5.478 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:20:35 rc/train.py:410 step:32K smpl:253K ep:164 epch:8.64 loss:0.084 grdn:5.577 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:20:44 rc/train.py:410 step:32K smpl:254K ep:165 epch:8.69 loss:0.086 grdn:5.276 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:20:53 rc/train.py:410 step:32K smpl:256K ep:166 epch:8.74 loss:0.088 grdn:5.413 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:21:01 rc/train.py:410 step:32K smpl:258K ep:167 epch:8.80 loss:0.087 grdn:5.492 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:21:10 rc/train.py:410 step:32K smpl:259K ep:168 epch:8.85 loss:0.087 grdn:5.388 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:21:19 rc/train.py:410 step:33K smpl:261K ep:169 epch:8.91 loss:0.084 grdn:5.348 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:21:28 rc/train.py:410 step:33K smpl:262K ep:170 epch:8.96 loss:0.085 grdn:5.719 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:21:37 rc/train.py:410 step:33K smpl:264K ep:171 epch:9.02 loss:0.088 grdn:5.598 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:21:46 rc/train.py:410 step:33K smpl:266K ep:172 epch:9.07 loss:0.086 grdn:5.427 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:21:55 rc/train.py:410 step:33K smpl:267K ep:173 epch:9.13 loss:0.084 grdn:5.221 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:22:04 rc/train.py:410 step:34K smpl:269K ep:174 epch:9.18 loss:0.081 grdn:5.258 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:22:13 rc/train.py:410 step:34K smpl:270K ep:176 epch:9.24 loss:0.083 grdn:5.261 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:22:21 rc/train.py:410 step:34K smpl:272K ep:177 epch:9.29 loss:0.083 grdn:5.348 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:22:30 rc/train.py:410 step:34K smpl:274K ep:178 epch:9.35 loss:0.079 grdn:5.288 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:22:39 rc/train.py:410 step:34K smpl:275K ep:179 epch:9.40 loss:0.084 grdn:5.366 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:22:48 rc/train.py:410 step:35K smpl:277K ep:180 epch:9.46 loss:0.081 grdn:5.289 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:22:57 rc/train.py:410 step:35K smpl:278K ep:181 epch:9.51 loss:0.079 grdn:5.156 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:23:05 rc/train.py:410 step:35K smpl:280K ep:182 epch:9.56 loss:0.083 grdn:5.115 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:23:14 rc/train.py:410 step:35K smpl:282K ep:183 epch:9.62 loss:0.081 grdn:5.140 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:23:23 rc/train.py:410 step:35K smpl:283K ep:184 epch:9.67 loss:0.083 grdn:5.068 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:23:32 rc/train.py:410 step:36K smpl:285K ep:185 epch:9.73 loss:0.082 grdn:5.121 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:23:41 rc/train.py:410 step:36K smpl:286K ep:186 epch:9.78 loss:0.079 grdn:4.924 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:23:50 rc/train.py:410 step:36K smpl:288K ep:187 epch:9.84 loss:0.081 grdn:4.872 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:23:59 rc/train.py:410 step:36K smpl:290K ep:188 epch:9.89 loss:0.081 grdn:4.928 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:24:07 rc/train.py:410 step:36K smpl:291K ep:189 epch:9.95 loss:0.080 grdn:5.204 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:24:16 rc/train.py:410 step:37K smpl:293K ep:190 epch:10.00 loss:0.081 grdn:4.974 lr:1.0e-05 updt_s:0.038 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:24:25 rc/train.py:410 step:37K smpl:294K ep:191 epch:10.06 loss:0.080 grdn:5.248 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:24:34 rc/train.py:410 step:37K smpl:296K ep:192 epch:10.11 loss:0.078 grdn:4.719 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:24:43 rc/train.py:410 step:37K smpl:298K ep:193 epch:10.17 loss:0.078 grdn:4.935 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:24:52 rc/train.py:410 step:37K smpl:299K ep:194 epch:10.22 loss:0.080 grdn:5.091 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:25:01 rc/train.py:410 step:38K smpl:301K ep:195 epch:10.28 loss:0.078 grdn:4.860 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:25:09 rc/train.py:410 step:38K smpl:302K ep:196 epch:10.33 loss:0.075 grdn:4.766 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:25:18 rc/train.py:410 step:38K smpl:304K ep:197 epch:10.38 loss:0.077 grdn:4.606 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:25:27 rc/train.py:410 step:38K smpl:306K ep:198 epch:10.44 loss:0.078 grdn:4.929 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:25:36 rc/train.py:410 step:38K smpl:307K ep:199 epch:10.49 loss:0.077 grdn:4.783 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:25:44 rc/train.py:410 step:39K smpl:309K ep:200 epch:10.55 loss:0.081 grdn:4.856 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:25:53 rc/train.py:410 step:39K smpl:310K ep:201 epch:10.60 loss:0.077 grdn:4.709 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:26:02 rc/train.py:410 step:39K smpl:312K ep:203 epch:10.66 loss:0.076 grdn:4.634 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:26:11 rc/train.py:410 step:39K smpl:314K ep:204 epch:10.71 loss:0.076 grdn:4.660 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:26:20 rc/train.py:410 step:39K smpl:315K ep:205 epch:10.77 loss:0.077 grdn:4.797 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:26:29 rc/train.py:410 step:40K smpl:317K ep:206 epch:10.82 loss:0.076 grdn:4.697 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:26:37 rc/train.py:410 step:40K smpl:318K ep:207 epch:10.88 loss:0.079 grdn:4.712 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:26:46 rc/train.py:410 step:40K smpl:320K ep:208 epch:10.93 loss:0.076 grdn:4.588 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:26:46 rc/train.py:430 Checkpoint policy after step 40000
+INFO 2025-12-18 18:26:56 rc/train.py:410 step:40K smpl:322K ep:209 epch:10.99 loss:0.078 grdn:4.768 lr:1.0e-05 updt_s:0.038 data_s:0.005
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:27:05 rc/train.py:410 step:40K smpl:323K ep:210 epch:11.04 loss:0.077 grdn:4.660 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:27:14 rc/train.py:410 step:41K smpl:325K ep:211 epch:11.10 loss:0.074 grdn:4.496 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:27:23 rc/train.py:410 step:41K smpl:326K ep:212 epch:11.15 loss:0.075 grdn:4.500 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:27:31 rc/train.py:410 step:41K smpl:328K ep:213 epch:11.20 loss:0.073 grdn:4.360 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:27:40 rc/train.py:410 step:41K smpl:330K ep:214 epch:11.26 loss:0.075 grdn:4.569 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:27:49 rc/train.py:410 step:41K smpl:331K ep:215 epch:11.31 loss:0.076 grdn:4.584 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:27:58 rc/train.py:410 step:42K smpl:333K ep:216 epch:11.37 loss:0.077 grdn:4.684 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:28:06 rc/train.py:410 step:42K smpl:334K ep:217 epch:11.42 loss:0.072 grdn:4.435 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:28:15 rc/train.py:410 step:42K smpl:336K ep:218 epch:11.48 loss:0.071 grdn:4.184 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:28:24 rc/train.py:410 step:42K smpl:338K ep:219 epch:11.53 loss:0.072 grdn:4.429 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:28:33 rc/train.py:410 step:42K smpl:339K ep:220 epch:11.59 loss:0.072 grdn:4.450 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:28:42 rc/train.py:410 step:43K smpl:341K ep:221 epch:11.64 loss:0.076 grdn:4.478 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:28:50 rc/train.py:410 step:43K smpl:342K ep:222 epch:11.70 loss:0.074 grdn:4.683 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:28:59 rc/train.py:410 step:43K smpl:344K ep:223 epch:11.75 loss:0.071 grdn:4.394 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:29:08 rc/train.py:410 step:43K smpl:346K ep:224 epch:11.81 loss:0.072 grdn:4.574 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:29:17 rc/train.py:410 step:43K smpl:347K ep:225 epch:11.86 loss:0.075 grdn:4.257 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:29:26 rc/train.py:410 step:44K smpl:349K ep:226 epch:11.92 loss:0.074 grdn:4.377 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:29:34 rc/train.py:410 step:44K smpl:350K ep:227 epch:11.97 loss:0.069 grdn:4.454 lr:1.0e-05 updt_s:0.038 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:29:43 rc/train.py:410 step:44K smpl:352K ep:228 epch:12.02 loss:0.071 grdn:4.468 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:29:52 rc/train.py:410 step:44K smpl:354K ep:230 epch:12.08 loss:0.071 grdn:4.257 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:30:01 rc/train.py:410 step:44K smpl:355K ep:231 epch:12.13 loss:0.073 grdn:4.268 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:30:10 rc/train.py:410 step:45K smpl:357K ep:232 epch:12.19 loss:0.070 grdn:4.439 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:30:19 rc/train.py:410 step:45K smpl:358K ep:233 epch:12.24 loss:0.073 grdn:4.324 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:30:27 rc/train.py:410 step:45K smpl:360K ep:234 epch:12.30 loss:0.071 grdn:4.323 lr:1.0e-05 updt_s:0.038 data_s:0.005
+INFO 2025-12-18 18:30:36 rc/train.py:410 step:45K smpl:362K ep:235 epch:12.35 loss:0.070 grdn:4.223 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:30:45 rc/train.py:410 step:45K smpl:363K ep:236 epch:12.41 loss:0.070 grdn:4.292 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:30:54 rc/train.py:410 step:46K smpl:365K ep:237 epch:12.46 loss:0.074 grdn:4.479 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:31:03 rc/train.py:410 step:46K smpl:366K ep:238 epch:12.52 loss:0.071 grdn:4.210 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:31:11 rc/train.py:410 step:46K smpl:368K ep:239 epch:12.57 loss:0.071 grdn:4.394 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:31:20 rc/train.py:410 step:46K smpl:370K ep:240 epch:12.63 loss:0.070 grdn:4.229 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:31:29 rc/train.py:410 step:46K smpl:371K ep:241 epch:12.68 loss:0.070 grdn:4.255 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:31:38 rc/train.py:410 step:47K smpl:373K ep:242 epch:12.73 loss:0.069 grdn:4.362 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:31:47 rc/train.py:410 step:47K smpl:374K ep:243 epch:12.79 loss:0.066 grdn:4.138 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:31:55 rc/train.py:410 step:47K smpl:376K ep:244 epch:12.84 loss:0.069 grdn:4.027 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:32:04 rc/train.py:410 step:47K smpl:378K ep:245 epch:12.90 loss:0.072 grdn:4.298 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:32:13 rc/train.py:410 step:47K smpl:379K ep:246 epch:12.95 loss:0.070 grdn:4.100 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:32:22 rc/train.py:410 step:48K smpl:381K ep:247 epch:13.01 loss:0.068 grdn:4.261 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:32:31 rc/train.py:410 step:48K smpl:382K ep:248 epch:13.06 loss:0.066 grdn:4.013 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:32:40 rc/train.py:410 step:48K smpl:384K ep:249 epch:13.12 loss:0.068 grdn:4.231 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:32:49 rc/train.py:410 step:48K smpl:386K ep:250 epch:13.17 loss:0.068 grdn:4.133 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:32:57 rc/train.py:410 step:48K smpl:387K ep:251 epch:13.23 loss:0.066 grdn:4.221 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:33:06 rc/train.py:410 step:49K smpl:389K ep:252 epch:13.28 loss:0.065 grdn:3.946 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:33:15 rc/train.py:410 step:49K smpl:390K ep:253 epch:13.34 loss:0.065 grdn:4.091 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:33:24 rc/train.py:410 step:49K smpl:392K ep:254 epch:13.39 loss:0.070 grdn:4.130 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:33:33 rc/train.py:410 step:49K smpl:394K ep:255 epch:13.45 loss:0.068 grdn:4.146 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:33:42 rc/train.py:410 step:49K smpl:395K ep:257 epch:13.50 loss:0.066 grdn:3.927 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:33:50 rc/train.py:410 step:50K smpl:397K ep:258 epch:13.55 loss:0.068 grdn:3.994 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:33:59 rc/train.py:410 step:50K smpl:398K ep:259 epch:13.61 loss:0.067 grdn:4.058 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:34:08 rc/train.py:410 step:50K smpl:400K ep:260 epch:13.66 loss:0.067 grdn:4.037 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:34:08 rc/train.py:430 Checkpoint policy after step 50000
+INFO 2025-12-18 18:34:17 rc/train.py:410 step:50K smpl:402K ep:261 epch:13.72 loss:0.067 grdn:3.912 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:34:26 rc/train.py:410 step:50K smpl:403K ep:262 epch:13.77 loss:0.069 grdn:4.157 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:34:35 rc/train.py:410 step:51K smpl:405K ep:263 epch:13.83 loss:0.069 grdn:4.038 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:34:44 rc/train.py:410 step:51K smpl:406K ep:264 epch:13.88 loss:0.068 grdn:3.972 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:34:53 rc/train.py:410 step:51K smpl:408K ep:265 epch:13.94 loss:0.069 grdn:4.194 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:35:01 rc/train.py:410 step:51K smpl:410K ep:266 epch:13.99 loss:0.067 grdn:4.056 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:35:11 rc/train.py:410 step:51K smpl:411K ep:267 epch:14.05 loss:0.064 grdn:4.002 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:35:19 rc/train.py:410 step:52K smpl:413K ep:268 epch:14.10 loss:0.064 grdn:4.048 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:35:28 rc/train.py:410 step:52K smpl:414K ep:269 epch:14.16 loss:0.065 grdn:3.906 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:35:37 rc/train.py:410 step:52K smpl:416K ep:270 epch:14.21 loss:0.067 grdn:3.915 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:35:46 rc/train.py:410 step:52K smpl:418K ep:271 epch:14.27 loss:0.065 grdn:4.028 lr:1.0e-05 updt_s:0.038 data_s:0.007
+INFO 2025-12-18 18:35:55 rc/train.py:410 step:52K smpl:419K ep:272 epch:14.32 loss:0.067 grdn:4.014 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:36:03 rc/train.py:410 step:53K smpl:421K ep:273 epch:14.37 loss:0.066 grdn:4.018 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:36:12 rc/train.py:410 step:53K smpl:422K ep:274 epch:14.43 loss:0.064 grdn:3.975 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:36:21 rc/train.py:410 step:53K smpl:424K ep:275 epch:14.48 loss:0.066 grdn:3.880 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:36:30 rc/train.py:410 step:53K smpl:426K ep:276 epch:14.54 loss:0.063 grdn:3.807 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:36:39 rc/train.py:410 step:53K smpl:427K ep:277 epch:14.59 loss:0.064 grdn:3.822 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:36:47 rc/train.py:410 step:54K smpl:429K ep:278 epch:14.65 loss:0.065 grdn:3.784 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:36:56 rc/train.py:410 step:54K smpl:430K ep:279 epch:14.70 loss:0.064 grdn:3.773 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:37:05 rc/train.py:410 step:54K smpl:432K ep:280 epch:14.76 loss:0.063 grdn:3.778 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:37:14 rc/train.py:410 step:54K smpl:434K ep:281 epch:14.81 loss:0.062 grdn:3.738 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:37:22 rc/train.py:410 step:54K smpl:435K ep:282 epch:14.87 loss:0.063 grdn:3.727 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:37:31 rc/train.py:410 step:55K smpl:437K ep:284 epch:14.92 loss:0.063 grdn:3.865 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:37:40 rc/train.py:410 step:55K smpl:438K ep:285 epch:14.98 loss:0.063 grdn:3.858 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:37:49 rc/train.py:410 step:55K smpl:440K ep:286 epch:15.03 loss:0.062 grdn:3.647 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:37:58 rc/train.py:410 step:55K smpl:442K ep:287 epch:15.09 loss:0.062 grdn:3.873 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:38:07 rc/train.py:410 step:55K smpl:443K ep:288 epch:15.14 loss:0.063 grdn:3.797 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:38:16 rc/train.py:410 step:56K smpl:445K ep:289 epch:15.19 loss:0.066 grdn:3.749 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:38:25 rc/train.py:410 step:56K smpl:446K ep:290 epch:15.25 loss:0.060 grdn:3.680 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:38:33 rc/train.py:410 step:56K smpl:448K ep:291 epch:15.30 loss:0.064 grdn:3.701 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:38:42 rc/train.py:410 step:56K smpl:450K ep:292 epch:15.36 loss:0.062 grdn:3.749 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:38:51 rc/train.py:410 step:56K smpl:451K ep:293 epch:15.41 loss:0.060 grdn:3.576 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:39:00 rc/train.py:410 step:57K smpl:453K ep:294 epch:15.47 loss:0.062 grdn:3.695 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:39:09 rc/train.py:410 step:57K smpl:454K ep:295 epch:15.52 loss:0.063 grdn:3.685 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:39:17 rc/train.py:410 step:57K smpl:456K ep:296 epch:15.58 loss:0.062 grdn:3.671 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:39:26 rc/train.py:410 step:57K smpl:458K ep:297 epch:15.63 loss:0.060 grdn:3.686 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:39:35 rc/train.py:410 step:57K smpl:459K ep:298 epch:15.69 loss:0.062 grdn:3.641 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:39:44 rc/train.py:410 step:58K smpl:461K ep:299 epch:15.74 loss:0.062 grdn:3.754 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:39:53 rc/train.py:410 step:58K smpl:462K ep:300 epch:15.80 loss:0.065 grdn:3.768 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:40:01 rc/train.py:410 step:58K smpl:464K ep:301 epch:15.85 loss:0.062 grdn:3.718 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:40:10 rc/train.py:410 step:58K smpl:466K ep:302 epch:15.90 loss:0.062 grdn:3.676 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:40:19 rc/train.py:410 step:58K smpl:467K ep:303 epch:15.96 loss:0.062 grdn:3.658 lr:1.0e-05 updt_s:0.038 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:40:28 rc/train.py:410 step:59K smpl:469K ep:304 epch:16.01 loss:0.062 grdn:3.500 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:40:37 rc/train.py:410 step:59K smpl:470K ep:305 epch:16.07 loss:0.061 grdn:3.448 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:40:46 rc/train.py:410 step:59K smpl:472K ep:306 epch:16.12 loss:0.061 grdn:3.705 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:40:55 rc/train.py:410 step:59K smpl:474K ep:307 epch:16.18 loss:0.060 grdn:3.606 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:41:04 rc/train.py:410 step:59K smpl:475K ep:308 epch:16.23 loss:0.060 grdn:3.488 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:41:12 rc/train.py:410 step:60K smpl:477K ep:309 epch:16.29 loss:0.060 grdn:3.520 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:41:21 rc/train.py:410 step:60K smpl:478K ep:311 epch:16.34 loss:0.060 grdn:3.654 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:41:30 rc/train.py:410 step:60K smpl:480K ep:312 epch:16.40 loss:0.061 grdn:3.433 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:41:30 rc/train.py:430 Checkpoint policy after step 60000
+INFO 2025-12-18 18:41:39 rc/train.py:410 step:60K smpl:482K ep:313 epch:16.45 loss:0.059 grdn:3.659 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:41:48 rc/train.py:410 step:60K smpl:483K ep:314 epch:16.51 loss:0.059 grdn:3.550 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:41:57 rc/train.py:410 step:61K smpl:485K ep:315 epch:16.56 loss:0.060 grdn:3.653 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:42:06 rc/train.py:410 step:61K smpl:486K ep:316 epch:16.62 loss:0.059 grdn:3.717 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:42:14 rc/train.py:410 step:61K smpl:488K ep:317 epch:16.67 loss:0.061 grdn:3.501 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:42:23 rc/train.py:410 step:61K smpl:490K ep:318 epch:16.72 loss:0.060 grdn:3.558 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:42:32 rc/train.py:410 step:61K smpl:491K ep:319 epch:16.78 loss:0.060 grdn:3.393 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:42:41 rc/train.py:410 step:62K smpl:493K ep:320 epch:16.83 loss:0.062 grdn:3.680 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:42:50 rc/train.py:410 step:62K smpl:494K ep:321 epch:16.89 loss:0.060 grdn:3.521 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:42:58 rc/train.py:410 step:62K smpl:496K ep:322 epch:16.94 loss:0.059 grdn:3.502 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:43:07 rc/train.py:410 step:62K smpl:498K ep:323 epch:17.00 loss:0.060 grdn:3.588 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:43:16 rc/train.py:410 step:62K smpl:499K ep:324 epch:17.05 loss:0.059 grdn:3.501 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:43:25 rc/train.py:410 step:63K smpl:501K ep:325 epch:17.11 loss:0.059 grdn:3.478 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:43:34 rc/train.py:410 step:63K smpl:502K ep:326 epch:17.16 loss:0.057 grdn:3.394 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:43:43 rc/train.py:410 step:63K smpl:504K ep:327 epch:17.22 loss:0.058 grdn:3.570 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:43:51 rc/train.py:410 step:63K smpl:506K ep:328 epch:17.27 loss:0.059 grdn:3.491 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:44:00 rc/train.py:410 step:63K smpl:507K ep:329 epch:17.33 loss:0.059 grdn:3.560 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:44:09 rc/train.py:410 step:64K smpl:509K ep:330 epch:17.38 loss:0.061 grdn:3.575 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:44:18 rc/train.py:410 step:64K smpl:510K ep:331 epch:17.44 loss:0.058 grdn:3.459 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:44:27 rc/train.py:410 step:64K smpl:512K ep:332 epch:17.49 loss:0.058 grdn:3.394 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:44:35 rc/train.py:410 step:64K smpl:514K ep:333 epch:17.54 loss:0.059 grdn:3.400 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:44:44 rc/train.py:410 step:64K smpl:515K ep:334 epch:17.60 loss:0.057 grdn:3.391 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:44:53 rc/train.py:410 step:65K smpl:517K ep:335 epch:17.65 loss:0.057 grdn:3.423 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:45:02 rc/train.py:410 step:65K smpl:518K ep:336 epch:17.71 loss:0.058 grdn:3.412 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:45:10 rc/train.py:410 step:65K smpl:520K ep:338 epch:17.76 loss:0.057 grdn:3.320 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:45:19 rc/train.py:410 step:65K smpl:522K ep:339 epch:17.82 loss:0.059 grdn:3.444 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:45:28 rc/train.py:410 step:65K smpl:523K ep:340 epch:17.87 loss:0.056 grdn:3.431 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:45:37 rc/train.py:410 step:66K smpl:525K ep:341 epch:17.93 loss:0.058 grdn:3.422 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:45:45 rc/train.py:410 step:66K smpl:526K ep:342 epch:17.98 loss:0.058 grdn:3.330 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:45:55 rc/train.py:410 step:66K smpl:528K ep:343 epch:18.04 loss:0.058 grdn:3.375 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:46:03 rc/train.py:410 step:66K smpl:530K ep:344 epch:18.09 loss:0.057 grdn:3.399 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:46:12 rc/train.py:410 step:66K smpl:531K ep:345 epch:18.15 loss:0.055 grdn:3.387 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:46:21 rc/train.py:410 step:67K smpl:533K ep:346 epch:18.20 loss:0.055 grdn:3.287 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:46:30 rc/train.py:410 step:67K smpl:534K ep:347 epch:18.26 loss:0.056 grdn:3.282 lr:1.0e-05 updt_s:0.038 data_s:0.005
+INFO 2025-12-18 18:46:39 rc/train.py:410 step:67K smpl:536K ep:348 epch:18.31 loss:0.056 grdn:3.394 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:46:47 rc/train.py:410 step:67K smpl:538K ep:349 epch:18.36 loss:0.055 grdn:3.338 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:46:56 rc/train.py:410 step:67K smpl:539K ep:350 epch:18.42 loss:0.057 grdn:3.410 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:47:05 rc/train.py:410 step:68K smpl:541K ep:351 epch:18.47 loss:0.058 grdn:3.312 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:47:14 rc/train.py:410 step:68K smpl:542K ep:352 epch:18.53 loss:0.056 grdn:3.157 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:47:22 rc/train.py:410 step:68K smpl:544K ep:353 epch:18.58 loss:0.057 grdn:3.339 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:47:31 rc/train.py:410 step:68K smpl:546K ep:354 epch:18.64 loss:0.057 grdn:3.354 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:47:41 rc/train.py:410 step:68K smpl:547K ep:355 epch:18.69 loss:0.058 grdn:3.335 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:47:50 rc/train.py:410 step:69K smpl:549K ep:356 epch:18.75 loss:0.057 grdn:3.262 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:47:59 rc/train.py:410 step:69K smpl:550K ep:357 epch:18.80 loss:0.056 grdn:3.195 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:48:08 rc/train.py:410 step:69K smpl:552K ep:358 epch:18.86 loss:0.058 grdn:3.524 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:48:18 rc/train.py:410 step:69K smpl:554K ep:359 epch:18.91 loss:0.056 grdn:3.383 lr:1.0e-05 updt_s:0.038 data_s:0.008
+INFO 2025-12-18 18:48:27 rc/train.py:410 step:69K smpl:555K ep:360 epch:18.97 loss:0.056 grdn:3.200 lr:1.0e-05 updt_s:0.037 data_s:0.009
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:48:36 rc/train.py:410 step:70K smpl:557K ep:361 epch:19.02 loss:0.056 grdn:3.342 lr:1.0e-05 updt_s:0.037 data_s:0.010
+INFO 2025-12-18 18:48:45 rc/train.py:410 step:70K smpl:558K ep:362 epch:19.07 loss:0.054 grdn:3.083 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:48:54 rc/train.py:410 step:70K smpl:560K ep:363 epch:19.13 loss:0.056 grdn:3.099 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:48:54 rc/train.py:430 Checkpoint policy after step 70000
+INFO 2025-12-18 18:49:03 rc/train.py:410 step:70K smpl:562K ep:365 epch:19.18 loss:0.056 grdn:3.280 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:49:12 rc/train.py:410 step:70K smpl:563K ep:366 epch:19.24 loss:0.052 grdn:3.202 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:49:21 rc/train.py:410 step:71K smpl:565K ep:367 epch:19.29 loss:0.055 grdn:3.250 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:49:30 rc/train.py:410 step:71K smpl:566K ep:368 epch:19.35 loss:0.054 grdn:3.218 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:49:39 rc/train.py:410 step:71K smpl:568K ep:369 epch:19.40 loss:0.056 grdn:3.214 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:49:47 rc/train.py:410 step:71K smpl:570K ep:370 epch:19.46 loss:0.056 grdn:3.171 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:49:56 rc/train.py:410 step:71K smpl:571K ep:371 epch:19.51 loss:0.053 grdn:2.993 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:50:05 rc/train.py:410 step:72K smpl:573K ep:372 epch:19.57 loss:0.054 grdn:3.170 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:50:14 rc/train.py:410 step:72K smpl:574K ep:373 epch:19.62 loss:0.055 grdn:3.271 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:50:23 rc/train.py:410 step:72K smpl:576K ep:374 epch:19.68 loss:0.054 grdn:3.123 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:50:31 rc/train.py:410 step:72K smpl:578K ep:375 epch:19.73 loss:0.055 grdn:3.249 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:50:40 rc/train.py:410 step:72K smpl:579K ep:376 epch:19.79 loss:0.055 grdn:3.215 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:50:49 rc/train.py:410 step:73K smpl:581K ep:377 epch:19.84 loss:0.055 grdn:3.212 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:50:58 rc/train.py:410 step:73K smpl:582K ep:378 epch:19.89 loss:0.054 grdn:3.198 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:51:07 rc/train.py:410 step:73K smpl:584K ep:379 epch:19.95 loss:0.055 grdn:3.191 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:51:16 rc/train.py:410 step:73K smpl:586K ep:380 epch:20.00 loss:0.053 grdn:3.243 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:51:25 rc/train.py:410 step:73K smpl:587K ep:381 epch:20.06 loss:0.054 grdn:3.109 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:51:34 rc/train.py:410 step:74K smpl:589K ep:382 epch:20.11 loss:0.054 grdn:3.193 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:51:42 rc/train.py:410 step:74K smpl:590K ep:383 epch:20.17 loss:0.052 grdn:3.124 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:51:51 rc/train.py:410 step:74K smpl:592K ep:384 epch:20.22 loss:0.054 grdn:3.137 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:52:00 rc/train.py:410 step:74K smpl:594K ep:385 epch:20.28 loss:0.054 grdn:3.065 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:52:09 rc/train.py:410 step:74K smpl:595K ep:386 epch:20.33 loss:0.053 grdn:3.165 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:52:18 rc/train.py:410 step:75K smpl:597K ep:387 epch:20.39 loss:0.054 grdn:3.096 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:52:26 rc/train.py:410 step:75K smpl:598K ep:388 epch:20.44 loss:0.054 grdn:3.131 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:52:35 rc/train.py:410 step:75K smpl:600K ep:389 epch:20.50 loss:0.053 grdn:3.039 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:52:44 rc/train.py:410 step:75K smpl:602K ep:390 epch:20.55 loss:0.054 grdn:3.082 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:52:53 rc/train.py:410 step:75K smpl:603K ep:392 epch:20.61 loss:0.053 grdn:3.112 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:53:02 rc/train.py:410 step:76K smpl:605K ep:393 epch:20.66 loss:0.053 grdn:3.136 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:53:11 rc/train.py:410 step:76K smpl:606K ep:394 epch:20.71 loss:0.055 grdn:3.153 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:53:20 rc/train.py:410 step:76K smpl:608K ep:395 epch:20.77 loss:0.053 grdn:3.033 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:53:29 rc/train.py:410 step:76K smpl:610K ep:396 epch:20.82 loss:0.051 grdn:2.972 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:53:38 rc/train.py:410 step:76K smpl:611K ep:397 epch:20.88 loss:0.052 grdn:3.156 lr:1.0e-05 updt_s:0.038 data_s:0.007
+INFO 2025-12-18 18:53:47 rc/train.py:410 step:77K smpl:613K ep:398 epch:20.93 loss:0.053 grdn:3.033 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 18:53:56 rc/train.py:410 step:77K smpl:614K ep:399 epch:20.99 loss:0.053 grdn:3.044 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:54:05 rc/train.py:410 step:77K smpl:616K ep:400 epch:21.04 loss:0.053 grdn:3.152 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:54:14 rc/train.py:410 step:77K smpl:618K ep:401 epch:21.10 loss:0.053 grdn:2.998 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:54:22 rc/train.py:410 step:77K smpl:619K ep:402 epch:21.15 loss:0.052 grdn:3.020 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:54:31 rc/train.py:410 step:78K smpl:621K ep:403 epch:21.21 loss:0.051 grdn:3.007 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:54:40 rc/train.py:410 step:78K smpl:622K ep:404 epch:21.26 loss:0.052 grdn:3.041 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:54:49 rc/train.py:410 step:78K smpl:624K ep:405 epch:21.32 loss:0.052 grdn:2.901 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:54:58 rc/train.py:410 step:78K smpl:626K ep:406 epch:21.37 loss:0.051 grdn:3.024 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:55:06 rc/train.py:410 step:78K smpl:627K ep:407 epch:21.43 loss:0.054 grdn:2.989 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:55:15 rc/train.py:410 step:79K smpl:629K ep:408 epch:21.48 loss:0.052 grdn:3.068 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:55:24 rc/train.py:410 step:79K smpl:630K ep:409 epch:21.53 loss:0.051 grdn:3.151 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:55:33 rc/train.py:410 step:79K smpl:632K ep:410 epch:21.59 loss:0.050 grdn:3.072 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:55:41 rc/train.py:410 step:79K smpl:634K ep:411 epch:21.64 loss:0.054 grdn:3.065 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:55:50 rc/train.py:410 step:79K smpl:635K ep:412 epch:21.70 loss:0.051 grdn:3.003 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:55:59 rc/train.py:410 step:80K smpl:637K ep:413 epch:21.75 loss:0.053 grdn:2.926 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:56:08 rc/train.py:410 step:80K smpl:638K ep:414 epch:21.81 loss:0.052 grdn:2.947 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:56:17 rc/train.py:410 step:80K smpl:640K ep:415 epch:21.86 loss:0.052 grdn:3.081 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:56:17 rc/train.py:430 Checkpoint policy after step 80000
+INFO 2025-12-18 18:56:26 rc/train.py:410 step:80K smpl:642K ep:416 epch:21.92 loss:0.051 grdn:2.936 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:56:35 rc/train.py:410 step:80K smpl:643K ep:417 epch:21.97 loss:0.051 grdn:2.956 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:56:44 rc/train.py:410 step:81K smpl:645K ep:419 epch:22.03 loss:0.051 grdn:2.932 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:56:53 rc/train.py:410 step:81K smpl:646K ep:420 epch:22.08 loss:0.051 grdn:3.026 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:57:01 rc/train.py:410 step:81K smpl:648K ep:421 epch:22.14 loss:0.051 grdn:2.985 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:57:10 rc/train.py:410 step:81K smpl:650K ep:422 epch:22.19 loss:0.051 grdn:2.983 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:57:19 rc/train.py:410 step:81K smpl:651K ep:423 epch:22.24 loss:0.051 grdn:2.934 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:57:28 rc/train.py:410 step:82K smpl:653K ep:424 epch:22.30 loss:0.051 grdn:2.938 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:57:37 rc/train.py:410 step:82K smpl:654K ep:425 epch:22.35 loss:0.051 grdn:2.967 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:57:45 rc/train.py:410 step:82K smpl:656K ep:426 epch:22.41 loss:0.050 grdn:2.847 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:57:54 rc/train.py:410 step:82K smpl:658K ep:427 epch:22.46 loss:0.051 grdn:2.899 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:58:03 rc/train.py:410 step:82K smpl:659K ep:428 epch:22.52 loss:0.051 grdn:2.910 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:58:12 rc/train.py:410 step:83K smpl:661K ep:429 epch:22.57 loss:0.051 grdn:2.884 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:58:21 rc/train.py:410 step:83K smpl:662K ep:430 epch:22.63 loss:0.049 grdn:2.995 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:58:29 rc/train.py:410 step:83K smpl:664K ep:431 epch:22.68 loss:0.050 grdn:2.918 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:58:38 rc/train.py:410 step:83K smpl:666K ep:432 epch:22.74 loss:0.051 grdn:2.901 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:58:47 rc/train.py:410 step:83K smpl:667K ep:433 epch:22.79 loss:0.051 grdn:2.935 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:58:56 rc/train.py:410 step:84K smpl:669K ep:434 epch:22.85 loss:0.050 grdn:2.808 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:59:04 rc/train.py:410 step:84K smpl:670K ep:435 epch:22.90 loss:0.052 grdn:2.992 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 18:59:13 rc/train.py:410 step:84K smpl:672K ep:436 epch:22.96 loss:0.051 grdn:2.941 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 18:59:23 rc/train.py:410 step:84K smpl:674K ep:437 epch:23.01 loss:0.050 grdn:2.894 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 18:59:31 rc/train.py:410 step:84K smpl:675K ep:438 epch:23.06 loss:0.049 grdn:2.816 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:59:40 rc/train.py:410 step:85K smpl:677K ep:439 epch:23.12 loss:0.051 grdn:2.880 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 18:59:49 rc/train.py:410 step:85K smpl:678K ep:440 epch:23.17 loss:0.051 grdn:2.987 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 18:59:58 rc/train.py:410 step:85K smpl:680K ep:441 epch:23.23 loss:0.049 grdn:2.956 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:00:07 rc/train.py:410 step:85K smpl:682K ep:442 epch:23.28 loss:0.051 grdn:2.995 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:00:15 rc/train.py:410 step:85K smpl:683K ep:443 epch:23.34 loss:0.050 grdn:2.906 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:00:24 rc/train.py:410 step:86K smpl:685K ep:444 epch:23.39 loss:0.047 grdn:2.810 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:00:33 rc/train.py:410 step:86K smpl:686K ep:446 epch:23.45 loss:0.049 grdn:2.916 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:00:42 rc/train.py:410 step:86K smpl:688K ep:447 epch:23.50 loss:0.049 grdn:2.859 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:00:51 rc/train.py:410 step:86K smpl:690K ep:448 epch:23.56 loss:0.050 grdn:2.922 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:00:59 rc/train.py:410 step:86K smpl:691K ep:449 epch:23.61 loss:0.050 grdn:2.912 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:01:08 rc/train.py:410 step:87K smpl:693K ep:450 epch:23.67 loss:0.049 grdn:2.801 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:01:17 rc/train.py:410 step:87K smpl:694K ep:451 epch:23.72 loss:0.048 grdn:2.740 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:01:26 rc/train.py:410 step:87K smpl:696K ep:452 epch:23.78 loss:0.049 grdn:2.794 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:01:34 rc/train.py:410 step:87K smpl:698K ep:453 epch:23.83 loss:0.050 grdn:2.834 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:01:43 rc/train.py:410 step:87K smpl:699K ep:454 epch:23.88 loss:0.050 grdn:2.967 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:01:52 rc/train.py:410 step:88K smpl:701K ep:455 epch:23.94 loss:0.049 grdn:2.758 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:02:01 rc/train.py:410 step:88K smpl:702K ep:456 epch:23.99 loss:0.048 grdn:2.821 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 19:02:10 rc/train.py:410 step:88K smpl:704K ep:457 epch:24.05 loss:0.048 grdn:2.875 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 19:02:19 rc/train.py:410 step:88K smpl:706K ep:458 epch:24.10 loss:0.048 grdn:2.833 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:02:28 rc/train.py:410 step:88K smpl:707K ep:459 epch:24.16 loss:0.049 grdn:2.777 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:02:37 rc/train.py:410 step:89K smpl:709K ep:460 epch:24.21 loss:0.048 grdn:2.734 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:02:45 rc/train.py:410 step:89K smpl:710K ep:461 epch:24.27 loss:0.047 grdn:2.849 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:02:54 rc/train.py:410 step:89K smpl:712K ep:462 epch:24.32 loss:0.049 grdn:2.751 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:03:03 rc/train.py:410 step:89K smpl:714K ep:463 epch:24.38 loss:0.048 grdn:2.809 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:03:12 rc/train.py:410 step:89K smpl:715K ep:464 epch:24.43 loss:0.048 grdn:2.833 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:03:21 rc/train.py:410 step:90K smpl:717K ep:465 epch:24.49 loss:0.048 grdn:2.721 lr:1.0e-05 updt_s:0.038 data_s:0.007
+INFO 2025-12-18 19:03:30 rc/train.py:410 step:90K smpl:718K ep:466 epch:24.54 loss:0.048 grdn:2.791 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:03:38 rc/train.py:410 step:90K smpl:720K ep:467 epch:24.60 loss:0.049 grdn:2.873 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:03:38 rc/train.py:430 Checkpoint policy after step 90000
+INFO 2025-12-18 19:03:48 rc/train.py:410 step:90K smpl:722K ep:468 epch:24.65 loss:0.049 grdn:2.783 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:03:56 rc/train.py:410 step:90K smpl:723K ep:469 epch:24.70 loss:0.050 grdn:2.801 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:04:05 rc/train.py:410 step:91K smpl:725K ep:470 epch:24.76 loss:0.048 grdn:2.686 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:04:14 rc/train.py:410 step:91K smpl:726K ep:471 epch:24.81 loss:0.048 grdn:2.768 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:04:23 rc/train.py:410 step:91K smpl:728K ep:473 epch:24.87 loss:0.047 grdn:2.668 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:04:32 rc/train.py:410 step:91K smpl:730K ep:474 epch:24.92 loss:0.047 grdn:2.795 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:04:41 rc/train.py:410 step:91K smpl:731K ep:475 epch:24.98 loss:0.048 grdn:2.834 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 19:04:50 rc/train.py:410 step:92K smpl:733K ep:476 epch:25.03 loss:0.046 grdn:2.778 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 19:04:59 rc/train.py:410 step:92K smpl:734K ep:477 epch:25.09 loss:0.047 grdn:2.761 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:05:08 rc/train.py:410 step:92K smpl:736K ep:478 epch:25.14 loss:0.049 grdn:2.812 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:05:16 rc/train.py:410 step:92K smpl:738K ep:479 epch:25.20 loss:0.046 grdn:2.704 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:05:25 rc/train.py:410 step:92K smpl:739K ep:480 epch:25.25 loss:0.048 grdn:2.828 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:05:34 rc/train.py:410 step:93K smpl:741K ep:481 epch:25.31 loss:0.048 grdn:2.692 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:05:43 rc/train.py:410 step:93K smpl:742K ep:482 epch:25.36 loss:0.047 grdn:2.756 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:05:51 rc/train.py:410 step:93K smpl:744K ep:483 epch:25.42 loss:0.048 grdn:2.873 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:06:00 rc/train.py:410 step:93K smpl:746K ep:484 epch:25.47 loss:0.048 grdn:2.794 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:06:09 rc/train.py:410 step:93K smpl:747K ep:485 epch:25.52 loss:0.046 grdn:2.657 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:06:18 rc/train.py:410 step:94K smpl:749K ep:486 epch:25.58 loss:0.047 grdn:2.811 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:06:27 rc/train.py:410 step:94K smpl:750K ep:487 epch:25.63 loss:0.048 grdn:2.718 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:06:35 rc/train.py:410 step:94K smpl:752K ep:488 epch:25.69 loss:0.047 grdn:2.688 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:06:44 rc/train.py:410 step:94K smpl:754K ep:489 epch:25.74 loss:0.047 grdn:2.627 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:06:53 rc/train.py:410 step:94K smpl:755K ep:490 epch:25.80 loss:0.047 grdn:2.704 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:07:02 rc/train.py:410 step:95K smpl:757K ep:491 epch:25.85 loss:0.049 grdn:2.846 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:07:11 rc/train.py:410 step:95K smpl:758K ep:492 epch:25.91 loss:0.046 grdn:2.668 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:07:20 rc/train.py:410 step:95K smpl:760K ep:493 epch:25.96 loss:0.047 grdn:2.737 lr:1.0e-05 updt_s:0.037 data_s:0.006
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 19:07:29 rc/train.py:410 step:95K smpl:762K ep:494 epch:26.02 loss:0.045 grdn:2.763 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 19:07:38 rc/train.py:410 step:95K smpl:763K ep:495 epch:26.07 loss:0.046 grdn:2.725 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:07:46 rc/train.py:410 step:96K smpl:765K ep:496 epch:26.13 loss:0.046 grdn:2.736 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:07:55 rc/train.py:410 step:96K smpl:766K ep:497 epch:26.18 loss:0.047 grdn:2.670 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:08:04 rc/train.py:410 step:96K smpl:768K ep:498 epch:26.23 loss:0.047 grdn:2.675 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:08:13 rc/train.py:410 step:96K smpl:770K ep:500 epch:26.29 loss:0.048 grdn:2.720 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:08:21 rc/train.py:410 step:96K smpl:771K ep:501 epch:26.34 loss:0.047 grdn:2.685 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:08:30 rc/train.py:410 step:97K smpl:773K ep:502 epch:26.40 loss:0.047 grdn:2.741 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:08:39 rc/train.py:410 step:97K smpl:774K ep:503 epch:26.45 loss:0.047 grdn:2.723 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:08:48 rc/train.py:410 step:97K smpl:776K ep:504 epch:26.51 loss:0.046 grdn:2.644 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:08:57 rc/train.py:410 step:97K smpl:778K ep:505 epch:26.56 loss:0.044 grdn:2.722 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:09:05 rc/train.py:410 step:97K smpl:779K ep:506 epch:26.62 loss:0.045 grdn:2.601 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:09:14 rc/train.py:410 step:98K smpl:781K ep:507 epch:26.67 loss:0.045 grdn:2.642 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:09:23 rc/train.py:410 step:98K smpl:782K ep:508 epch:26.73 loss:0.047 grdn:2.601 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 19:09:32 rc/train.py:410 step:98K smpl:784K ep:509 epch:26.78 loss:0.046 grdn:2.630 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:09:41 rc/train.py:410 step:98K smpl:786K ep:510 epch:26.84 loss:0.046 grdn:2.800 lr:1.0e-05 updt_s:0.037 data_s:0.008
+INFO 2025-12-18 19:09:50 rc/train.py:410 step:98K smpl:787K ep:511 epch:26.89 loss:0.048 grdn:2.628 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:09:59 rc/train.py:410 step:99K smpl:789K ep:512 epch:26.95 loss:0.044 grdn:2.606 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:10:07 rc/train.py:410 step:99K smpl:790K ep:513 epch:27.00 loss:0.045 grdn:2.596 lr:1.0e-05 updt_s:0.037 data_s:0.007
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+/home/jupyter-qj351/.conda/envs/lerobot/lib/python3.10/site-packages/torchvision/io/_video_deprecation_warning.py:9: UserWarning: The video decoding and encoding capabilities of torchvision are deprecated from version 0.22 and will be removed in version 0.24. We recommend that you migrate to TorchCodec, where we'll consolidate the future decoding/encoding capabilities of PyTorch: https://github.com/pytorch/torchcodec
+  warnings.warn(
+INFO 2025-12-18 19:10:17 rc/train.py:410 step:99K smpl:792K ep:514 epch:27.05 loss:0.045 grdn:2.682 lr:1.0e-05 updt_s:0.037 data_s:0.009
+INFO 2025-12-18 19:10:25 rc/train.py:410 step:99K smpl:794K ep:515 epch:27.11 loss:0.044 grdn:2.634 lr:1.0e-05 updt_s:0.038 data_s:0.006
+INFO 2025-12-18 19:10:34 rc/train.py:410 step:99K smpl:795K ep:516 epch:27.16 loss:0.046 grdn:2.626 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:10:43 rc/train.py:410 step:100K smpl:797K ep:517 epch:27.22 loss:0.044 grdn:2.630 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:10:52 rc/train.py:410 step:100K smpl:798K ep:518 epch:27.27 loss:0.048 grdn:2.516 lr:1.0e-05 updt_s:0.037 data_s:0.006
+INFO 2025-12-18 19:11:00 rc/train.py:410 step:100K smpl:800K ep:519 epch:27.33 loss:0.045 grdn:2.580 lr:1.0e-05 updt_s:0.037 data_s:0.007
+INFO 2025-12-18 19:11:00 rc/train.py:430 Checkpoint policy after step 100000
+INFO 2025-12-18 19:11:01 rc/train.py:501 End of training

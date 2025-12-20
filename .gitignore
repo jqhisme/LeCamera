@@ -1,0 +1,7 @@
+# Model checkpoints
+*.ckpt
+*.pt
+*.safetensors
+
+# Images
+*.png
