@@ -1,6 +1,6 @@
 # LeCamera
 Gonna Capture Them all \
-![](Documentation/DemoVideo.mp4)
+![Demo Video](Documentation/DemoVideo.mp4)
 LeCamera is a dynamic human tracking system designed for documenting creative projects such as kinetic installations and immersive environments. It combines affordable robotics and computer vision to autonomously follow a human subject, providing diverse visual perspectives without a camera operator.
 
 ## Features
