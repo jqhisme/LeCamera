@@ -15,6 +15,7 @@ Clone the repository:
 ```bash
 git clone https://github.com/yourusername/lecamera.git
 cd lecamera
+```
 
 Run Inference Using Policy
 ```
