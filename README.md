@@ -1,5 +1,5 @@
 # LeCamera
-Gonna Capture Them all \
+**Gonna Capture Them all** \
 ![Demo Video](Documentation/DemoVideo.gif) \
 LeCamera is a dynamic human tracking system designed for documenting creative projects such as kinetic installations and immersive environments. It combines affordable robotics and computer vision to autonomously follow a human subject, providing diverse visual perspectives without a camera operator.
 
